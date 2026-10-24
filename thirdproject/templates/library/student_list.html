@@ -1,0 +1,156 @@
+{% extends "library/base.html" %}
+{% block title %}
+Students | Library
+{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>
+            Student Information
+        </h1>
+        <p>
+            Manage registered students.
+        </p>
+    </div>
+    <a href="{% url 'student_add' %}"
+       class="primary-button">
+
+        + Add Student
+
+    </a>
+
+</div>
+
+
+
+<div class="section-card">
+
+
+{% if students %}
+
+
+<div class="table-wrapper">
+
+
+<table>
+
+
+<tr>
+
+    <th>Student ID</th>
+
+    <th>Name</th>
+
+    <th>Email</th>
+
+    <th>Phone</th>
+
+    <th>Course</th>
+
+    <th>Semester</th>
+
+    <th>Actions</th>
+
+</tr>
+
+
+
+{% for student in students %}
+
+
+<tr>
+
+    <td>
+        <strong>
+            {{ student.student_id }}
+        </strong>
+    </td>
+
+    <td>
+        {{ student.name }}
+    </td>
+
+    <td>
+        {{ student.email }}
+    </td>
+
+    <td>
+        {{ student.phone }}
+    </td>
+
+    <td>
+        {{ student.course }}
+    </td>
+
+    <td>
+        {{ student.semester }}
+    </td>
+
+
+    <td class="actions">
+
+
+        <a href="{% url 'student_update' student.id %}"
+           class="edit-button">
+
+            Edit
+
+        </a>
+
+
+
+        <form
+            action="{% url 'student_delete' student.id %}"
+            method="POST"
+            onsubmit="return confirm('Delete this student?');">
+
+            {% csrf_token %}
+
+            <button class="delete-button">
+
+                Delete
+
+            </button>
+
+        </form>
+
+
+    </td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</table>
+
+
+</div>
+
+
+{% else %}
+
+
+<div class="empty-state">
+
+    <h3>
+        No students found
+    </h3>
+
+    <p>
+        Add your first student.
+    </p>
+
+    <a href="{% url 'student_add' %}"
+       class="primary-button">
+
+        Add Student
+
+    </a>
+
+</div>
+{% endif %}
+</div>
+{% endblock %}

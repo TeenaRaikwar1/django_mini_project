@@ -1,0 +1,283 @@
+{% extends "library/base.html" %}
+
+
+{% block title %}
+
+Dashboard | Library
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="page-heading">
+
+    <div>
+
+        <h1>
+            Library Dashboard
+        </h1>
+
+        <p>
+            Manage students, books and transactions.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="stats-grid">
+
+
+    <div class="stat-card">
+
+        <span>👨‍🎓</span>
+
+        <div>
+
+            <h3>
+                {{ student_count }}
+            </h3>
+
+            <p>
+                Total Students
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+        <span>📚</span>
+
+        <div>
+
+            <h3>
+                {{ book_count }}
+            </h3>
+
+            <p>
+                Book Titles
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+        <span>✅</span>
+
+        <div>
+
+            <h3>
+                {{ available_books }}
+            </h3>
+
+            <p>
+                Available Copies
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card">
+
+        <span>📖</span>
+
+        <div>
+
+            <h3>
+                {{ issued_count }}
+            </h3>
+
+            <p>
+                Currently Issued
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<div class="quick-actions">
+
+
+    <a href="{% url 'student_add' %}"
+       class="action-card">
+
+        <strong>
+            ➕ Add Student
+        </strong>
+
+        <span>
+            Store student information
+        </span>
+
+    </a>
+
+
+    <a href="{% url 'book_add' %}"
+       class="action-card">
+
+        <strong>
+            📚 Add Book
+        </strong>
+
+        <span>
+            Add books to inventory
+        </span>
+
+    </a>
+
+
+    <a href="{% url 'issue_book' %}"
+       class="action-card">
+
+        <strong>
+            📤 Issue Book
+        </strong>
+
+        <span>
+            Issue a book to a student
+        </span>
+
+    </a>
+
+
+    <a href="{% url 'issue_list' %}"
+       class="action-card">
+
+        <strong>
+            🔄 Transactions
+        </strong>
+
+        <span>
+            View issue/return history
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<div class="section-card">
+
+
+    <div class="section-header">
+
+        <h2>
+            Recent Transactions
+        </h2>
+
+        <a href="{% url 'issue_list' %}">
+            View All
+        </a>
+
+    </div>
+
+
+
+    {% if recent_issues %}
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <tr>
+
+                <th>
+                    Student
+                </th>
+
+                <th>
+                    Book
+                </th>
+
+                <th>
+                    Issue Date
+                </th>
+
+                <th>
+                    Due Date
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+            </tr>
+
+
+            {% for issue in recent_issues %}
+
+            <tr>
+
+                <td>
+                    {{ issue.student.name }}
+                </td>
+
+                <td>
+                    {{ issue.book.title }}
+                </td>
+
+                <td>
+                    {{ issue.issue_date }}
+                </td>
+
+                <td>
+                    {{ issue.due_date }}
+                </td>
+
+                <td>
+
+                    <span class="badge {{ issue.status|lower }}">
+
+                        {{ issue.status }}
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+        <p class="empty">
+            No transactions yet.
+        </p>
+
+    {% endif %}
+
+
+</div>
+
+
+{% endblock %}

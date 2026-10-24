@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Library Management
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="container nav-inner">
+
+
+        <a href="{% url 'dashboard' %}"
+           class="brand">
+
+            📚 Library Management
+
+        </a>
+
+
+        <nav>
+
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'student_list' %}">
+                Students
+            </a>
+
+            <a href="{% url 'book_list' %}">
+                Books
+            </a>
+
+            <a href="{% url 'issue_list' %}">
+                Issues
+            </a>
+
+            <a href="{% url 'issue_book' %}"
+               class="nav-button">
+
+                Issue Book
+
+            </a>
+
+            <a href="/admin/"
+               class="admin-link">
+
+                Admin
+
+            </a>
+
+        </nav>
+
+
+    </div>
+
+</header>
+
+
+
+<main class="container main-content">
+
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message {{ message.tags }}">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    {% block content %}
+
+    {% endblock %}
+
+
+</main>
+
+
+
+<footer>
+
+    Library Management System
+    |
+    Django + SQLite
+
+</footer>
+
+
+</body>
+
+</html>

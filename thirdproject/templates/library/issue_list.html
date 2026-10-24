@@ -1,0 +1,213 @@
+{% extends "library/base.html" %}
+
+
+{% block title %}
+
+Transactions | Library
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="page-heading">
+
+
+<div>
+
+<h1>
+    Issue & Return History
+</h1>
+
+<p>
+    Track all library transactions.
+</p>
+
+</div>
+
+
+<a href="{% url 'issue_book' %}"
+   class="primary-button">
+
+    + Issue Book
+
+</a>
+
+
+</div>
+
+
+
+<div class="section-card">
+
+
+{% if issues %}
+
+
+<div class="table-wrapper">
+
+
+<table>
+
+
+<tr>
+
+<th>Student</th>
+
+<th>Book</th>
+
+<th>Issue Date</th>
+
+<th>Due Date</th>
+
+<th>Return Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+
+
+{% for issue in issues %}
+
+
+<tr>
+
+
+<td>
+
+{{ issue.student.name }}
+
+<br>
+
+<small>
+    {{ issue.student.student_id }}
+</small>
+
+</td>
+
+
+<td>
+    {{ issue.book.title }}
+</td>
+
+
+<td>
+    {{ issue.issue_date }}
+</td>
+
+
+<td>
+    {{ issue.due_date }}
+</td>
+
+
+<td>
+
+{% if issue.return_date %}
+
+    {{ issue.return_date }}
+
+{% else %}
+
+    —
+
+{% endif %}
+
+</td>
+
+
+<td>
+
+<span class="badge {{ issue.status|lower }}">
+
+    {{ issue.status }}
+
+</span>
+
+</td>
+
+
+<td>
+
+
+{% if issue.status == "Issued" %}
+
+
+<form
+    action="{% url 'return_book' issue.id %}"
+    method="POST">
+
+    {% csrf_token %}
+
+    <button class="return-button">
+
+        Return
+
+    </button>
+
+</form>
+
+
+{% else %}
+
+
+<span class="returned-text">
+
+    Completed
+
+</span>
+
+
+{% endif %}
+
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</table>
+
+
+</div>
+
+
+{% else %}
+
+
+<div class="empty-state">
+
+<h3>
+    No transactions found
+</h3>
+
+<p>
+    No books have been issued yet.
+</p>
+
+<a href="{% url 'issue_book' %}"
+   class="primary-button">
+
+    Issue Book
+
+</a>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+
+{% endblock %}

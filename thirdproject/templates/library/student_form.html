@@ -1,0 +1,98 @@
+{% extends "library/base.html" %}
+
+
+{% block title %}
+
+{{ title }} | Library
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="form-page">
+
+
+<div class="form-card">
+
+
+<h1>
+    {{ title }}
+</h1>
+
+
+<p class="form-subtitle">
+
+    Enter student information below.
+
+</p>
+
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+
+    {{ form.non_field_errors }}
+
+
+    {% for field in form %}
+
+
+    <div class="form-group">
+
+
+        <label for="{{ field.id_for_label }}">
+
+            {{ field.label }}
+
+        </label>
+
+
+        {{ field }}
+
+
+        {{ field.errors }}
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+
+    <div class="form-actions">
+
+
+        <a href="{% url 'student_list' %}"
+           class="secondary-button">
+
+            Cancel
+
+        </a>
+
+
+        <button class="primary-button">
+
+            {{ button }}
+
+        </button>
+
+
+    </div>
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}

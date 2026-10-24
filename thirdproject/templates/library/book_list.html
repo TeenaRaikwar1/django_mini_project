@@ -1,0 +1,188 @@
+{% extends "library/base.html" %}
+
+
+{% block title %}
+
+Books | Library
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="page-heading">
+
+
+<div>
+
+<h1>
+    Book Inventory
+</h1>
+
+<p>
+    Manage books and available copies.
+</p>
+
+</div>
+
+
+<a href="{% url 'book_add' %}"
+   class="primary-button">
+
+    + Add Book
+
+</a>
+
+
+</div>
+
+
+
+<div class="section-card">
+
+
+{% if books %}
+
+
+<div class="table-wrapper">
+
+
+<table>
+
+
+<tr>
+
+<th>Title</th>
+
+<th>Author</th>
+
+<th>Category</th>
+
+<th>ISBN</th>
+
+<th>Total</th>
+
+<th>Available</th>
+
+<th>Actions</th>
+
+</tr>
+
+
+
+{% for book in books %}
+
+
+<tr>
+
+
+<td>
+
+<strong>
+    {{ book.title }}
+</strong>
+
+</td>
+
+
+<td>
+    {{ book.author }}
+</td>
+
+
+<td>
+    {{ book.category }}
+</td>
+
+
+<td>
+    {{ book.isbn }}
+</td>
+
+
+<td>
+    {{ book.quantity }}
+</td>
+
+
+<td>
+    {{ book.available_quantity }}
+</td>
+
+
+
+<td class="actions">
+
+
+<a href="{% url 'book_update' book.id %}"
+   class="edit-button">
+
+    Edit
+
+</a>
+
+
+
+<form
+    action="{% url 'book_delete' book.id %}"
+    method="POST"
+    onsubmit="return confirm('Delete this book?');">
+
+    {% csrf_token %}
+
+    <button class="delete-button">
+
+        Delete
+
+    </button>
+
+</form>
+
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</table>
+
+
+</div>
+
+
+{% else %}
+
+
+<div class="empty-state">
+
+<h3>
+    No books found
+</h3>
+
+<p>
+    Add your first book.
+</p>
+
+<a href="{% url 'book_add' %}"
+   class="primary-button">
+
+    Add Book
+
+</a>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+
+{% endblock %}

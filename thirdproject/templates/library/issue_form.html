@@ -1,0 +1,111 @@
+{% extends "library/base.html" %}
+
+
+{% block title %}
+
+Issue Book | Library
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="form-page">
+
+
+<div class="form-card">
+
+
+<h1>
+    Issue Book
+</h1>
+
+
+<p class="form-subtitle">
+
+    Select a student, book and due date.
+
+</p>
+
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+
+    {{ form.non_field_errors }}
+
+
+    {% for field in form %}
+
+
+    <div class="form-group">
+
+
+        <label>
+
+            {{ field.label }}
+
+        </label>
+
+
+        {{ field }}
+
+
+        {{ field.errors }}
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+
+    <div class="info-box">
+
+        <strong>
+            Note:
+        </strong>
+
+        Issuing automatically decreases
+        available quantity.
+
+    </div>
+
+
+
+    <div class="form-actions">
+
+
+        <a href="{% url 'issue_list' %}"
+           class="secondary-button">
+
+            Cancel
+
+        </a>
+
+
+        <button class="primary-button">
+
+            Issue Book
+
+        </button>
+
+
+    </div>
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+{% endblock %}
